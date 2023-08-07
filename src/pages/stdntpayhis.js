@@ -2,8 +2,28 @@ import React from 'react';
 import '../styles/stdntpayhis.css';
 import {FaCreditCard, FaHistory} from 'react-icons/fa';
 import {NavLink} from 'react-router-dom';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 const Stdntpayhis = () => {
+
+  const [data, setData] = React.useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/myapp/pay_his/');
+        console.log(response.data);
+        
+        
+        setData(response.data);
+      } catch (error) {
+        console.log('Error loading....')
+        console.log(error);
+      
+      }
+    };
+    fetchData();
+  }, []);
 
 
   return (
@@ -43,74 +63,16 @@ const Stdntpayhis = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>December</td>
-              <td>2000</td>
-              <td>Jan 5</td>
-              <td> Not Paid</td>
-            </tr>
-            <tr>
-            <td>November</td>
-              <td>2600</td>
-              <td>Dec 5</td>
-              <td>Paid</td>
-            </tr>
-            <tr>
-            <td>October</td>
-              <td>2400</td>
-              <td>Nov 5</td>
-              <td>Paid</td>
-            </tr>
-            <tr>
-            <td>September</td>
-              <td>2900</td>
-              <td>Oct 5</td>
-              <td>Paid</td>
-            </tr>
-            <tr>
-            <td>August</td>
-              <td>2000</td>
-              <td>Sep 5</td>
-              <td>Paid</td>
-            </tr>
-            <tr>
-            <td>July</td>
-              <td>2500</td>
-              <td>Aug 5</td>
-              <td>Paid</td>
-            </tr>
-            <tr>
-            <td>June</td>
-              <td>2750</td>
-              <td>Jul 5</td>
-              <td>Paid</td>
-            </tr><tr>
-            <td>May</td>
-              <td>2650</td>
-              <td>Jun 5</td>
-              <td>Paid</td>
-            </tr><tr>
-            <td>April</td>
-              <td>2950</td>
-              <td>May 5</td>
-              <td>Paid</td>
-            </tr><tr>
-            <td>March</td>
-              <td>2450</td>
-              <td>Apr 5</td>
-              <td>Paid</td>
-            </tr>
-            <tr>
-            <td>February</td>
-              <td>2200</td>
-              <td>Mar 5</td>
-              <td>Paid</td>
-            </tr><tr>
-            <td>January</td>
-              <td>2850</td>
-              <td>Feb 5</td>
-              <td>Paid</td>
-            </tr>
+            {data.map((d) => (
+              <tr>
+                <td>{d.month}</td>
+                <td>{d.amount}</td>
+                <td>{d.Generated_on}</td>
+                <td>{d.is_paid}</td>
+              </tr>
+            ))}
+            
+            
           </tbody>
         </table>
       </div>

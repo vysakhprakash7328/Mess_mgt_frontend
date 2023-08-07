@@ -69,7 +69,7 @@ const Stdntbillpay = () => {
             </li>
             <li>
               <NavLink
-                to="#"
+                to="/stdntpayhis"
                 className={"stdntbillpay-active22"}
                 activeClassName="active"
               >
